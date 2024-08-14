@@ -26,6 +26,6 @@ df_russia_with_delta = df_russia \
 
 df_russia_solved = df_russia_with_delta.select('date', 'new_cases_yesterday', 'new_cases', 'delta')
     
-df_russia_solved.coalesce(1).write.csv('russia_cases_delta.csv', header = True)
+df_russia_solved.write.csv('russia_cases_delta.csv', header = True)
 
 spark.stop()

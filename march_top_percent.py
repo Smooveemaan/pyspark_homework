@@ -18,6 +18,6 @@ df_march_percentage = df_march.select('iso_code', 'location', 'total_cases', 'po
     
 df_march_percentage = df_march_percentage.orderBy(df_march_percentage.percent, ascending = False).limit(15)
 
-df_with_date.coalesce(1).write.csv('march_top_percent.csv', header = True)
+df_march_percentage.write.csv('march_top_percent.csv', header = True)
 
 spark.stop()

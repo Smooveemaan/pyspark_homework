@@ -36,6 +36,6 @@ df_with_date = df_march_last_week.alias('df1') \
 
 df_with_date = df_with_date.orderBy(df_with_date.new_cases, ascending = False).limit(10)
 
-df_with_date.coalesce(1).write.csv('march_last_week.csv', header = True)
+df_with_date.write.csv('march_last_week.csv', header = True)
 
 spark.stop()
