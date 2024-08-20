@@ -11,16 +11,17 @@ df = spark \
     .csv("covid-data.csv")
 
 df_russia = df.select('date', 'location', 'new_cases') \
-    .where(
-        (df.location == 'Russia') &
-        (df.date >= '2021-03-24') & 
-        (df.date <= '2021-03-31')
-    )
+    .where(df.location == 'Russia')
 
 window_spec = Window.partitionBy('location').orderBy('date')
 
-df_russia_with_delta = df_russia \
-    .withColumn('new_cases_yesterday', F.lag('new_cases').over(window_spec)) \
+df_russia_with_lag = df_russia \
+    .withColumn('new_cases_yesterday', F.lag('new_cases').over(window_spec))
+
+df_russia_filtered = df_russia_with_lag \
+    .where((df_russia_with_lag.date >= '2021-03-24') & (df_russia_with_lag.date <= '2021-03-31'))
+
+df_russia_with_delta = df_russia_filtered \
     .withColumn('delta', F.col('new_cases') - F.col('new_cases_yesterday')) \
     .orderBy('date')
 

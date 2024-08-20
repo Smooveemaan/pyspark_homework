@@ -18,7 +18,8 @@ df_march_last_week = df.select('date', 'location', 'new_cases') \
         (df.location != 'European Union') &
         (df.location != 'Asia') &
         (df.location != 'South America') &
-        (df.location != 'North America')
+        (df.location != 'North America') &
+        (df.location != 'Africa')
     )
 
 max_cases_per_location = df_march_last_week.groupBy('location') \
